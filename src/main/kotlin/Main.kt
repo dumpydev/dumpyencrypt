@@ -17,7 +17,7 @@ fun main() {
             println("Enter key (leave empty for random)")
             var key = readLine()!!.toString()
             if (key.isEmpty() || key.length != 16) {
-                key = enc.genPrivateKey()
+                key = enc.genPrivKey()
             }
             println("Encrypted: ${enc.encrypt(text, key)}")
             println("Key: $key")
@@ -68,7 +68,7 @@ fun secureMsg() {
     print("[1] Encrypt\n[2] Decrypt\nEnter your choice: ")
     when (readLine()!!.toInt()) {
         1 -> {
-            val key = enc.genPrivateKey()
+            val key = enc.genPrivKey()
             val encrypted = enc.encrypt(message!!, key)
             println("Encrypted message: $key:$encrypted")
             print("Validating... ")
@@ -117,7 +117,7 @@ class Encrypt {
         val decrypted = cipher.doFinal(Base64.getDecoder().decode(text))
         return String(decrypted)
     }
-    fun genPrivateKey(): String {
+    fun genPrivKey(): String {
         val key = ByteArray(16)
         Random().nextBytes(key)
         return Base64.getEncoder().encodeToString(key)
